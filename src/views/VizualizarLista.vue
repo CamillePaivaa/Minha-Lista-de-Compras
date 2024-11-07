@@ -2,7 +2,13 @@
   <div class="page_container">
     <div class="titulo_container">
       <h2>Minha Lista de Compras</h2>
-      <button class="button_compartilhar">Compartilhar no WhatsApp</button>
+      <button
+        class="button_compartilhar"
+        v-if="listaDeProdutos.length"
+        @click="print"
+      >
+        Compartilhar no WhatsApp
+      </button>
     </div>
 
     <table
@@ -48,16 +54,21 @@
       </tbody>
     </table>
 
-    <div v-else>
-      <p>Lista de compras está vazia.</p>
+    <div v-else class="naoPossuiProduto">
+      <img src="../assets/cestaCompras.png" style="width: 180px" />
+      <p>
+        Lista de compras está vazia. Clique no botão para adicionar novos
+        produtos
+      </p>
       <router-link to="/lista-produtos">
-        <button>Adicionar novo produto</button>
+        <button class="button_Adicionar">Adicionar Produtos</button>
       </router-link>
     </div>
   </div>
 </template>
-
 <script>
+//import { jsPDF } from "jspdf";
+
 export default {
   computed: {
     listaDeProdutos() {
@@ -66,8 +77,40 @@ export default {
   },
 
   methods: {
+    print() {
+      //const doc = new jsPDF();
+
+      //doc.text("Minha lista", 40, 10);
+
+      //var pos = 20;
+
+      var prodListWhatsapp = "*Lista de Compras*\n\n";
+      prodListWhatsapp += "_Quantidade - Produto_ \n\n";
+
+      for (var i = 0; i < this.listaDeProdutos.length; i++) {
+        const nome = this.listaDeProdutos[i].nome;
+        const qtd = this.listaDeProdutos[i].quantidade;
+
+        //doc.text(`- ${nome} - ${qtd}`, 20, pos);
+        prodListWhatsapp += "- " + qtd + " - " + nome + "\n";
+        //pos += 5;
+      }
+
+      //doc.save("lista_de_compras.pdf");
+
+      this.compartilharLista(prodListWhatsapp);
+    },
+
     deletarProduto(produto) {
       this.$store.dispatch("removerProduto", produto);
+    },
+
+    compartilharLista(prodListWhatsapp) {
+      const whatsappURL = `https://api.whatsapp.com/send?text=${encodeURIComponent(
+        prodListWhatsapp
+      )}`;
+
+      window.open(whatsappURL, "_blank");
     },
   },
 };
@@ -89,6 +132,7 @@ export default {
   column-gap: 30px;
   align-items: center;
   width: 50%;
+  margin-top: 40px;
 }
 
 .tabela {
@@ -122,6 +166,25 @@ export default {
   width: 30px;
   height: 25px;
   border-radius: 5px;
+}
+
+.naoPossuiProduto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 20px;
+  width: 100%;
+  height: 100%;
+}
+.button_Adicionar {
+  background-color: green;
+  color: white;
+  cursor: pointer;
+  width: 300px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 40px;
 }
 
 .button_compartilhar {
