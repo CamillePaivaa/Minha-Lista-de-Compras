@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-import LoginUsuario from "../components/LoginUsuario.vue";
-import ListaProdutos from "@/components/ListaProdutos.vue";
-import VizualizarLista from "@/components/VizualizarLista.vue";
-import CriarConta from "@/components/CriarConta.vue";
+import LoginUsuario from "../views/LoginUsuario.vue";
+import ListaProdutos from "@/views/ListaProdutos.vue";
+import VizualizarLista from "@/views/VizualizarLista.vue";
+import CriarConta from "@/views/CriarConta.vue";
 
 const routes = [
   {
@@ -21,6 +21,7 @@ const routes = [
     path: "/vizualizar-lista",
     name: "VizualizarLista",
     component: VizualizarLista,
+    props: true,
   },
 
   {

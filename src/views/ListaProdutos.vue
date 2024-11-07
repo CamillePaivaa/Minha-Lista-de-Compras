@@ -2,21 +2,23 @@
   <div class="page_container">
     <div class="titulo_img_container">
       <h3 class="titulo">
-        <!-- Exibe o título original quando a lista estiver vazia -->
-        <span v-if="!listaProdutos.length">
+        <span v-if="!listaDeProdutos.length">
           Selecione os Produtos que deseja adicionar a sua lista de compras!
         </span>
 
-        <!-- Exibe o texto "Clique para visualizar a lista" quando a lista tiver produtos -->
-        <span v-if="listaProdutos.length">
+        <span v-if="listaDeProdutos.length" class="titulo_imgLista">
           Clique para visualizar a lista
         </span>
       </h3>
-      <div v-if="listaProdutos.length">
-        <router-link to="/vizualizar-lista">
-          <img class="imgLista" src="../assets/listaCompras.png" />
-        </router-link>
-      </div>
+
+      <router-link to="/vizualizar-lista">
+        <img
+          class="imgLista"
+          v-if="listaDeProdutos.length"
+          src="../assets/listaCompras.png"
+          @click="storeListaProdutos"
+        />
+      </router-link>
     </div>
 
     <div v-if="loading">Carregando produtos...</div>
@@ -59,8 +61,13 @@
               :key="productIndex"
               class="produto_item"
             >
-              <input type="checkbox" v-model="listaProdutos" :value="produto" />
-              {{ produto }}
+              <input
+                type="checkbox"
+                v-model="listaDeProdutos"
+                @click="produto.quantidade = 1"
+                :value="produto"
+              />
+              {{ produto.nome }}
             </div>
           </div>
         </div>
@@ -75,15 +82,16 @@ import { produtosCategorias } from "../produtos.js";
 export default {
   data() {
     return {
+      listaDeProdutos: [],
       produtosCategorias,
       categoriaSelecionada: null,
       categoriaSelecionadaInput: "",
       mostrarDropdown: false,
       loading: false,
       produtoSelecionado: false,
-      listaProdutos: [],
     };
   },
+
   directives: {
     clickOutside: {
       mounted(el, binding) {
@@ -108,8 +116,10 @@ export default {
     esconderDropdown() {
       this.mostrarDropdown = false;
     },
-    salvarProdutosSelecionados() {
-      console.log("Produtos Selecionados:", this.listaProdutos);
+
+    storeListaProdutos() {
+      console.log("listaDeProdutos:", this.listaDeProdutos);
+      this.$store.commit("setListaDeProdutos", this.listaDeProdutos);
     },
   },
 };
@@ -125,21 +135,22 @@ export default {
   margin-left: 10%;
   row-gap: 40px;
 }
-.titulo_img_container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: start;
-}
 .titulo {
   font-family: Georgia, "Times New Roman", Times, serif;
   margin-top: 3%;
   color: rgb(0, 5, 35);
-  width: 700px;
   font-size: 20px;
   height: 90px;
   border-radius: 20px;
   display: flex;
+  align-items: center;
+}
+.titulo_img_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 450px;
 }
 
 .imgLista {

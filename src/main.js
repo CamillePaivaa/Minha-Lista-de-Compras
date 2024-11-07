@@ -1,7 +1,6 @@
-import { createApp } from "vue"; // Importa a função createApp do Vue
-import App from "./App.vue"; // Importa o componente App
-import router from "./router"; // Importa o Vue Router
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
 
-createApp(App)
-  .use(router) // Configura o Vue Router no aplicativo
-  .mount("#app"); // Monta o app na div com id 'app'
+createApp(App).use(router).use(store).mount("#app");
