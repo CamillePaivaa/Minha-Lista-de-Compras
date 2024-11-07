@@ -1,15 +1,10 @@
 <template>
-  <ListaProdutos />
+  <router-view />
 </template>
 
 <script>
-import ListaProdutos from "./components/ListaProdutos.vue";
-
 export default {
   name: "App",
-  components: {
-    ListaProdutos,
-  },
 };
 </script>
 

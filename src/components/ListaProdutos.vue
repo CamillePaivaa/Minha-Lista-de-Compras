@@ -12,13 +12,11 @@
           Clique para visualizar a lista
         </span>
       </h3>
-
-      <img
-        src="../assets/listaCompras.png"
-        v-if="listaProdutos.length"
-        @click="salvarProdutosSelecionados"
-        class="imgLista"
-      />
+      <div v-if="listaProdutos.length">
+        <router-link to="/vizualizar-lista">
+          <img class="imgLista" src="../assets/listaCompras.png" />
+        </router-link>
+      </div>
     </div>
 
     <div v-if="loading">Carregando produtos...</div>
