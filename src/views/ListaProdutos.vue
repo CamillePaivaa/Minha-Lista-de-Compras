@@ -11,13 +11,13 @@
         </span>
       </h3>
 
-      <router-link to="/vizualizar-lista">
+      <router-link to="/visualizar-lista">
         <button
           v-if="listaDeProdutos.length"
           @click="storeListaProdutos"
           class="button_vizualizar"
         >
-          Vizualizar Lista
+          Visualizar Lista
         </button>
       </router-link>
     </div>

@@ -207,24 +207,30 @@ export const produtosCategorias = [
     ],
   },
   {
-    produtos: [
-      { nome: "Pão de forma", quantidade: 0 },
-      { nome: "Pão francês", quantidade: 0 },
-      { nome: "Pão integral", quantidade: 0 },
-      { nome: "Pão de hambúrguer", quantidade: 0 },
-      { nome: "Pão sírio", quantidade: 0 },
-      { nome: "Pão de alho", quantidade: 0 },
-    ],
-  },
-  {
-    nome: "Biscoitos e Bolachas",
-    produtos: [
-      { nome: "Cream cracker", quantidade: 0 },
-      { nome: "Recheadas", quantidade: 0 },
-      { nome: "Amanteigadas", quantidade: 0 },
-      { nome: "Torradas", quantidade: 0 },
-      { nome: "Croissants", quantidade: 0 },
-      { nome: "Pão doce", quantidade: 0 },
+    nome: "Pães e Produtos de Panificação",
+    subCategorias: [
+      {
+        nome: "Pães",
+        produtos: [
+          { nome: "Pão de forma", quantidade: 0 },
+          { nome: "Pão francês", quantidade: 0 },
+          { nome: "Pão integral", quantidade: 0 },
+          { nome: "Pão de hambúrguer", quantidade: 0 },
+          { nome: "Pão sírio", quantidade: 0 },
+          { nome: "Pão de alho", quantidade: 0 },
+        ],
+      },
+      {
+        nome: "Biscoitos e Bolachas",
+        produtos: [
+          { nome: "Cream cracker", quantidade: 0 },
+          { nome: "Recheadas", quantidade: 0 },
+          { nome: "Amanteigadas", quantidade: 0 },
+          { nome: "Torradas", quantidade: 0 },
+          { nome: "Croissants", quantidade: 0 },
+          { nome: "Pão doce", quantidade: 0 },
+        ],
+      },
     ],
   },
   {
