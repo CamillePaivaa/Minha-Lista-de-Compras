@@ -23,7 +23,7 @@
           v-model="senha"
         />
       </div>
-      <p class="esqueci-senha">Esqueci minha senha</p>
+      <!-- <p class="esqueci-senha">Esqueci minha senha</p> -->
 
       <div class="button_container">
         <button class="button" @click="login">Entrar</button>
