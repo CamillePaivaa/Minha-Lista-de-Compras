@@ -12,12 +12,13 @@
       </h3>
 
       <router-link to="/vizualizar-lista">
-        <img
-          class="imgLista"
+        <button
           v-if="listaDeProdutos.length"
-          src="../assets/listaCompras.png"
           @click="storeListaProdutos"
-        />
+          class="button_vizualizar"
+        >
+          Vizualizar Lista
+        </button>
       </router-link>
     </div>
 
@@ -61,13 +62,15 @@
               :key="productIndex"
               class="produto_item"
             >
-              <input
-                type="checkbox"
-                v-model="listaDeProdutos"
-                @click="produto.quantidade = 1"
-                :value="produto"
-              />
-              {{ produto.nome }}
+              <label style="cursor: pointer">
+                <input
+                  type="checkbox"
+                  v-model="listaDeProdutos"
+                  @click="produto.quantidade = 1"
+                  :value="produto"
+                />
+                {{ produto.nome }}
+              </label>
             </div>
           </div>
         </div>
@@ -145,12 +148,22 @@ export default {
   display: flex;
   align-items: center;
 }
+
+.button_vizualizar {
+  background-color: white;
+  color: green;
+  border: 2px solid green;
+  cursor: pointer;
+  width: 200px;
+  height: 40px;
+  border-radius: 5px;
+}
 .titulo_img_container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  min-width: 450px;
+  column-gap: 50px;
 }
 
 .imgLista {

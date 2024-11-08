@@ -3,18 +3,21 @@
     <h2>Para Criar Sua Conta, Preencha os Campos Abaixo!</h2>
     <div class="inputs_container">
       <div class="input_label">
-        <label>Nome de Usuário</label>
+        <label>Nome</label>
+        <input type="text" placeholder="   Nome" class="input" v-model="nome" />
+
+        <label>Email</label>
         <input
-          type="text"
-          placeholder="  Usuário"
+          type="email"
+          placeholder="  Email"
           class="input"
-          v-model="usuario"
+          v-model="email"
         />
       </div>
       <div class="input_label">
         <label>Senha de Acesso</label>
         <input
-          type="text"
+          type="password"
           placeholder="  Senha"
           class="input"
           v-model="senha"
@@ -26,49 +29,44 @@
 </template>
 
 <script>
+import { auth, createUserWithEmailAndPassword } from "../firebase.js";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/firebase";
+
 export default {
   data() {
     return {
-      usuario: "",
+      email: "",
       senha: "",
-      contasCadastradas: [
-        { nome: "user1", senha: "123" },
-        { nome: "user2", senha: "123" },
-        { nome: "user3", senha: "123" },
-      ],
+      nome: "",
     };
   },
 
   methods: {
-    criarConta() {
-      // Verifica se os campos não estão vazios
-      if (this.usuario && this.senha) {
-        // Verifica se o nome de usuário já está cadastrado
-        const usuarioExistente = this.contasCadastradas.find(
-          (conta) => conta.nome === this.usuario
+    async criarConta() {
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          this.email,
+          this.senha
         );
 
-        if (usuarioExistente) {
-          console.log("Usuário já existe. Tente outro nome.");
-        } else {
-          const novaConta = { nome: this.usuario, senha: this.senha };
-          this.contasCadastradas.push(novaConta);
+        const uid = userCredential.user.uid;
 
-          alert("Conta criada com sucesso!");
-          console.log(this.contasCadastradas);
-          this.usuario = "";
-          this.senha = "";
+        await setDoc(doc(db, "users", uid), {
+          nome: this.nome,
+          email: this.email,
+          dataDeCriacao: new Date().toISOString(),
+        });
 
-          this.$router.push("/");
-        }
-      } else {
-        alert("Por favor, preencha todos os campos.");
+        alert("Conta criada com sucesso!");
+        this.$router.push("/");
+      } catch (error) {
+        alert("Erro ao criar conta: " + error.message);
       }
     },
   },
 };
 </script>
 
-<style scoped>
-/* Adicione seu CSS aqui */
-</style>
+<style scoped></style>

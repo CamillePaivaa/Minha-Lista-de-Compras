@@ -1,24 +1,23 @@
 <template>
   <div class="page_container">
     <h2>Olá, Seja bem-vindo!</h2>
-    <router-link to="/dashboard">
-      <img class="img_cesta" src="../assets/login/cestaCompras.jpg" />
-    </router-link>
+
+    <img class="img_cesta" src="../assets/login/cestaCompras.jpg" />
 
     <div class="inputs_container">
       <div class="input_label">
-        <label>Nome de Usuário</label>
+        <label>Email</label>
         <input
-          type="text"
-          placeholder="  Usuário"
+          type="email"
+          placeholder=" Email"
           class="input"
-          v-model="usuario"
+          v-model="email"
         />
       </div>
       <div class="input_label">
         <label>Senha de Acesso</label>
         <input
-          type="text"
+          type="password"
           placeholder="  Senha"
           class="input"
           v-model="senha"
@@ -27,7 +26,7 @@
       <p class="esqueci-senha">Esqueci minha senha</p>
 
       <div class="button_container">
-        <button class="button" @click="verificarDadosAcesso">Entrar</button>
+        <button class="button" @click="login">Entrar</button>
         <button class="button_criar" @click="irPaginaCriarConta">
           Criar Conta
         </button>
@@ -37,20 +36,32 @@
 </template>
 
 <script>
+import { auth, db, signInWithEmailAndPassword } from "../firebase.js";
+import { collection, query, where, getDocs } from "firebase/firestore";
+
 export default {
   data() {
     return {
-      usuario: "",
-      senha: "",
+      email: "testevue@gmail.com",
+      senha: "123456",
     };
   },
 
   methods: {
-    verificarDadosAcesso() {
-      if (this.usuario === "camille" && this.senha === "123") {
+    async login() {
+      try {
+        await signInWithEmailAndPassword(auth, this.email, this.senha);
+
+        const usersRef = collection(db, "users");
+        const q = query(usersRef, where("email", "==", this.email));
+
+        const querySnapshot = await getDocs(q);
+        const usuarioDados = querySnapshot.docs[0].data();
+
+        console.log(usuarioDados.nome);
         this.$router.push("/lista-produtos");
-      } else {
-        alert("Usuário ou senha inválidos");
+      } catch (error) {
+        alert("Dados de acesso inválidos!");
       }
     },
 

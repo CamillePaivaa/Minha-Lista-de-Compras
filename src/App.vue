@@ -1,11 +1,20 @@
 <template>
+  <div v-if="!['/', '/criar-conta'].includes($route.path)">
+    <HeaderPrincipal />
+  </div>
+
   <router-view />
 </template>
 
 <script>
+import HeaderPrincipal from "./views/HeaderPrincipal.vue";
+
 export default {
   data() {
     return {};
+  },
+  components: {
+    HeaderPrincipal,
   },
 };
 </script>

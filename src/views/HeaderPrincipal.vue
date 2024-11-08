@@ -1,8 +1,7 @@
 <template>
   <div class="header">
     <ul class="opcoes_header">
-      <li>Montar Lista</li>
-      <li>Ver Carrinho</li>
+      <router-link to="/">Sair</router-link>
     </ul>
   </div>
 </template>
@@ -25,8 +24,12 @@ export default {
   margin-left: 20%;
   column-gap: 60px;
   width: 60%;
-  height: 70px;
-  list-style-type: none;
-  color: white;
+  height: 50px;
+  margin-top: -5px;
+  a {
+    text-decoration: none;
+    color: white;
+    padding-top: 10px;
+  }
 }
 </style>
